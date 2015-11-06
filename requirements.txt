@@ -1,0 +1,7 @@
+Django==1.8.5
+django-tastypie==0.12.2
+python-dateutil==2.4.2
+python-mimeparse==0.1.4
+six==1.10.0
+virtualenv==13.1.2
+wheel==0.26.0

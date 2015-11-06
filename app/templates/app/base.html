@@ -1,0 +1,11 @@
+<html>
+    <head>
+        {% load staticfiles %}
+        <link rel="stylesheet" type="text/css" href="{% static 'app/normalize.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'app/style.css' %}">
+        <title>EdFund</title>
+    </head>
+    <body>
+        {% block content %}{% endblock %}
+    </body>
+</html>

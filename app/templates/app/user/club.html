@@ -1,0 +1,10 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+    <h2>{{ club.club_name }}</h2>
+    <ul>
+    {% for fund in club.fund_set.all %}
+        <li><a >{{ fund.fund_name }}</a></li>
+    {% endfor %}
+    </ul>
+{% endblock %}
