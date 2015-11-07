@@ -1,5 +1,45 @@
 {% extends 'app/base.html' %}
 
 {% block content %}
-    <h1>Hello World</h1>
+    <div class="container">
+        <div class="section no-pad-bot" id="index-banner">
+            <br><br>
+            <h1 class="header center amber-text text-darken-1">What is EdFund?</h1>
+            <div class="row center">
+                <h5 class="header col s12 light intro">EdFund is a platform for adults to contribute to school clubs of their choice. Whether you're an alumni or someone with no affiliation to the school,
+                    you can help make a difference for students who attend these extracurriculars! Your donation will help these clubs provide better opportunities and experiences for their students!
+                </h5>
+            </div>
+            <div class="row center">
+                <a href="{% url 'edfund:schools' %}" id="download-button" class="btn-large waves-effect waves-light orange">Find a School</a>
+            </div>
+        </div>
+        <br><br>
+        <div class="section">
+            <div class="row">
+                <div class="col s12 m4">
+                    <div class="icon-block">
+                        <h2 class="center light-blue-text text-darken-3"><i class="material-icons">location_on</i></h2>
+                        <h5 class="center">Schools in Your Area</h5>
+                        <p class="light">Help students in your area by contributing to your favorite school club. Your gift to the community will not go unnoticed.</p>
+                    </div>
+                </div>
+                <div class="col s12 m4">
+                    <div class="icon-block">
+                        <h2 class="center light-blue-text text-darken-3"><i class="material-icons">redeem</i></h2>
+                        <h5 class="center">Gift to Students</h5>
+                        <p class="light">Your gift is ultimately a gift to the students. With your help, students will be able to enjoy opportunities that they otherwise would not have.</p>
+                    </div>
+                </div>
+                <div class="col s12 m4">
+                    <div class="icon-block">
+                        <h2 class="center light-blue-text text-darken-3"><i class="material-icons">credit_card</i></h2>
+                        <h5 class="center">Fast and Secure</h5>
+                        <p class="light">EdFund makes donating simple and reliable. All you have to do is click a button. We take care of the rest and make sure your money is sent safely.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><br>
+    </div>
 {% endblock %}

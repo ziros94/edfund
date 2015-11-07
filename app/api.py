@@ -1,5 +1,5 @@
 from tastypie.authorization import Authorization
-from tastypie.authentication import ApiKeyAuthentication
+from tastypie.authentication import BasicAuthentication
 from tastypie.resources import ModelResource
 from tastypie import fields
 from .models import User, School, Fund, Donation, Club, Incentive
@@ -10,14 +10,15 @@ class UserResource(ModelResource):
         queryset = User.objects.all()
         authorization = Authorization()
         excludes = ['email', 'password', 'is_active', 'is_staff', 'is_superuser']
-        # authentication = ApiKeyAuthentication()
-        list_allowed_methods = ['get', 'post']
-        detail_allowed_methods = ['get', 'post']
+        authentication = BasicAuthentication()
+        allowed_methods = ['get']
+
 
 class SchoolResource(ModelResource):
     class Meta:
         queryset = School.objects.all()
         authorization = Authorization()
+        authentication = BasicAuthentication()
 
 
 class ClubResource(ModelResource):
@@ -27,6 +28,7 @@ class ClubResource(ModelResource):
     class Meta:
         queryset = Club.objects.all()
         authorization = Authorization()
+        authentication = BasicAuthentication()
 
 
 class FundResource(ModelResource):
@@ -35,6 +37,7 @@ class FundResource(ModelResource):
     class Meta:
         queryset = Fund.objects.all()
         authorization = Authorization()
+        authentication = BasicAuthentication()
 
 
 class DonationResource(ModelResource):
@@ -43,6 +46,7 @@ class DonationResource(ModelResource):
     class Meta:
         queryset = Donation.objects.all()
         authorization = Authorization()
+        authentication = BasicAuthentication()
 
 
 class IncentiveResouce(ModelResource):
@@ -51,3 +55,4 @@ class IncentiveResouce(ModelResource):
     class Meta:
         queryset = Incentive.objects.all()
         authorization = Authorization()
+        authentication = BasicAuthentication()
