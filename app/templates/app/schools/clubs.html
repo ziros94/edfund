@@ -1,9 +1,36 @@
 {% extends 'app/base.html' %}
 
 {% block content %}
-    <ul>
+    <div class="container">
+        <div class="section row header-row">
+            <div class="col s5"><h4>Club</h4></div>
+            <div class="col s3"><h4>President</h4></div>
+            <div class="col s2"><input type="text" id="search" placeholder="Search Club"></div>
+        </div>
+        <div class="divider"></div>
+
     {% for club in object_list %}
-        <li><a href="{% url 'edfund:funds' club.school.id club.id %}">{{ club.club_name }}</a></li>
+        <div class="section row" data-row="row">
+            {% with school_id=club.school.encoded_id club_id=club.encoded_id %}
+                <div class="col s5"><a href="{% url 'edfund:funds' school_id club_id %}">{{ club.club_name | title }}</a></div>
+            {% endwith %}
+            <div class="col s5">{{ club.leader.first_name | title }} {{ club.leader.last_name | title }}</div>
+        </div>
     {% endfor %}
-    </ul>
+    </div>
+
+    <script>
+        //Filter search results
+        var $rows = $('[data-row]');
+        $('#search').keyup(function() {
+            var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+                reg = RegExp(val, 'i'),
+                text;
+
+            $rows.show().filter(function() {
+                text = $(this).text().replace(/\s+/g, ' ');
+                return !reg.test(text);
+            }).hide();
+        });
+    </script>
 {% endblock %}

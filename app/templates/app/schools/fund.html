@@ -1,9 +1,11 @@
 {% extends 'app/base.html' %}
 
 {% block content %}
+    <div class="container">
+        <h1>{{ fund.fund_name }}</h1>
+        <h3>{{ fund.description }}</h3><br>
+        <h4>{{ fund.club.school.school_name }} {{ fund.club.club_name }} Team</h4>
+    </div>
 
-<h1>{{ fund.fund_name }}</h1>
-<h3>{{ fund.description }}</h3><br>
-<h3>{{ fund.club.school.school_name }} {{ fund.club.club_name }} Team</h3>
 
 {% endblock %}

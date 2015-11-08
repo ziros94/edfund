@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views import generic
-from .models import User, School, Fund, Donation, Club, Incentive
+from .models import User, School, Fund, Donation, Club, Incentive, decode_id
 # Create your views here.
 
 
@@ -18,7 +18,7 @@ class ClubsView(generic.ListView):
     model = Club
 
     def get_queryset(self):
-        return Club.objects.filter(school__id=self.args[0])
+        return Club.objects.filter(school__id=decode_id(self.args[0]))
 
 
 class FundsView(generic.ListView):
@@ -26,12 +26,15 @@ class FundsView(generic.ListView):
     model = Fund
 
     def get_queryset(self):
-        return Fund.objects.filter(club__id=self.args[1])
+        return Fund.objects.filter(club__id=decode_id(self.args[1]))
 
 
 class FundView(generic.DetailView):
     template_name = 'app/schools/fund.html'
     model = Fund
+
+    def get_object(self):
+        return get_object_or_404(Fund, pk=decode_id(self.args[2]))
 
 
 class UserInfoView(generic.DetailView):

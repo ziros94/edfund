@@ -27,3 +27,7 @@ main {
 .page-footer{
     padding-top:0 !important;
 }
+.header-row{
+    padding-bottom: 0;
+    margin-bottom: 0;
+}

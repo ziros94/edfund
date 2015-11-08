@@ -5,7 +5,9 @@
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 {#        <link rel="stylesheet" type="text/css" href="{% static 'app/css/normalize.css' %}">#}
         <link rel="stylesheet" type="text/css" href="{% static 'app/css/materialize.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'app/css/font-awesome.min.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'app/css/style.css' %}">
+        <script type="text/javascript" src="{% static 'app/js/jquery-2.1.4.min.js' %}"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>EdFund</title>
     </head>
@@ -13,7 +15,7 @@
         <header>
             <nav class="light-blue darken-3">
                 <div class="nav-wrapper container">
-                    <a href="#" class="brand-logo">EdFund</a>
+                    <div class="brand-logo"><a href="{% url 'edfund:index' %}" >EdFund</a> <i class="fa fa-graduation-cap" style="display: inline"></i></div>
                     <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
                     <ul class="right hide-on-med-and-down">
                         <li><a href="{% url 'edfund:schools' %}">Schools</a></li>
@@ -32,7 +34,6 @@
                 <div class="container">EdFund ©</div>
             </div>
         </footer>
-        <script type="text/javascript" src="{% static 'app/js/jquery-2.1.4.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'app/js/materialize.min.js' %}"></script>
         <script>
             $(document).ready(function(){
