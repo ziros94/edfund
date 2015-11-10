@@ -1,0 +1,6 @@
+<form action="{% url 'edfund:deleteClub' club.encoded_id%}" method="post">
+    {% csrf_token %}
+    <p>Are you sure you want to delete the club {{ club.club_name }}?</p>
+    <button type="submit">Yes</button>
+    <button type="button"><a href="{% url 'edfund:schoolInfo' club.school.id %}">No</a></button>
+</form>

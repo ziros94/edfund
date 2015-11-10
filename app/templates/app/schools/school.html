@@ -1,0 +1,27 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+    <div class="container center">
+        <div class="row">
+            <h1>{{ school.school_name }}</h1>
+        </div>
+        <div class="row">
+            <h3>{{ school.address | title }}, {{ school.city | title}}, {{ school.state | title}} {{ school.zip }}</h3>
+        </div>
+
+        {% for club in school.club_set.all %}
+            {% with club_id=club.encoded_id %}
+                <div class="row">
+                    <a href="{% url 'edfund:clubInfo' club_id %}">{{ club.club_name }}</a>
+                </div>
+            {% endwith %}
+        {% endfor %}
+        {% if user.is_authenticated and user.userprofile.school == school %}
+            <div class="section row header-row">
+                <button class="btn-large waves-effect waves-light orange"><a href="{% url 'edfund:addClub' %}">Add Club</a></button>
+            </div>
+        {% endif %}
+    </div>
+
+
+{% endblock %}

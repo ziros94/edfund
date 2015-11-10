@@ -1,0 +1,36 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+    <div class="container center">
+        <div class="row">
+            <h1>{{ club.club_name }}</h1>
+        </div>
+        <div class="row">
+            <h3>{{ club.description }}</h3>
+        </div>
+        <div class="row">
+            <h3>Run by {{ club.leader.first_name }} {{ club.leader.last_name }}</h3>
+        </div>
+        <div class="row">
+            <h4>{{ club.leader.userprofile.school.school_name }}</h4>
+        </div>
+
+        {% for fund in club.fund_set.all %}
+            {% with fund_id=fund.encoded_id %}
+                <div class="row">
+                    <a href="{% url 'edfund:fundInfo' fund_id %}">{{ fund.fund_name }}</a>
+                </div>
+            {% endwith %}
+        {% endfor %}
+        {% if user.is_authenticated and user.userprofile.school == club.school and user == club.leader %}
+            <div class="section row header-row">
+                <button class="btn-large waves-effect waves-light orange"><a href="{% url 'edfund:addFund' club.encoded_id %}">Add Fund</a></button>
+            </div>
+            <div class="section row header-row">
+                <button class="btn-large waves-effect waves-light orange"><a href="{% url 'edfund:deleteClub' club.encoded_id %}">Delete Club</a></button>
+            </div>
+        {% endif %}
+    </div>
+
+
+{% endblock %}

@@ -34,3 +34,6 @@ main {
 .dropdown-content li > a, .dropdown-content li > span{
     color: #0277bd !important;
 }
+.btn-large > a{
+    color: inherit;
+}

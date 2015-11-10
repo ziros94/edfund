@@ -1,11 +1,12 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from .models import User, School, Fund, Donation, Club, Incentive, decode_id
-from .forms import UserForm, ClubForm
+from .forms import UserForm, ClubForm, FundForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.core.urlresolvers import reverse
 
 
 def index(request):
@@ -15,6 +16,14 @@ def index(request):
 class SchoolsView(generic.ListView):
     template_name = 'app/schools/schools.html'
     model = School
+
+
+class SchoolInfoView(generic.DetailView):
+    template_name = 'app/schools/school.html'
+    model = School
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(School, pk=decode_id(self.args[0]))
 
 
 class ClubsView(generic.ListView):
@@ -28,23 +37,25 @@ class ClubsView(generic.ListView):
             return Club.objects.all()
 
 
+class ClubInfoView(generic.DetailView):
+    template_name = 'app/schools/club.html'
+    model = Club
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(Club, pk=decode_id(self.args[0]))
+
+
 class FundsView(generic.ListView):
     template_name = 'app/schools/funds.html'
     model = Fund
-
-    def get_queryset(self):
-        if self.args:
-            return Fund.objects.filter(club__id=decode_id(self.args[1]))
-        else:
-            return Fund.objects.all()
 
 
 class FundView(generic.DetailView):
     template_name = 'app/schools/fund.html'
     model = Fund
 
-    def get_object(self):
-        return get_object_or_404(Fund, pk=decode_id(self.args[2]))
+    def get_object(self, queryset=None):
+        return get_object_or_404(Fund, pk=decode_id(self.args[0]))
 
 
 class UserInfoView(generic.DetailView):
@@ -114,17 +125,45 @@ def add_club(request):
     if request.method == 'POST':
         club_form = ClubForm(request.POST)
         if club_form.is_valid():
-            # club = club_form.save()
-            school = get_object_or_404(School, pk=int(request.POST['school_select']))
+            print request.POST.get('school_select', False)
+            school = get_object_or_404(School, pk=int(request.POST.get('school_select', False)))
+            if school != request.user.userprofile.school:
+                return HttpResponse("Restricted Access")
             print school.school_name, request.user.id
             club = Club(club_name=club_form.cleaned_data['club_name'], description=club_form.cleaned_data['description'], school=school, leader=request.user)
-            # club.school = school
-            # club.leader = user
             club.save()
-            return HttpResponseRedirect('/edfund/clubs/')
+            return HttpResponseRedirect(reverse('edfund:schoolInfo', args=[school.encoded_id()]))
         else:
             print club_form.errors
     else:
         club_form = ClubForm()
-        schools = School.objects.all()
-        return render(request, 'app/user/addclub.html', {'club_form': club_form, 'schools': schools})
+        return render(request, 'app/user/addclub.html', {'club_form': club_form})
+
+
+@login_required
+def add_fund(request, club_id):
+    if request.method == 'POST':
+        fund_form = FundForm(request.POST)
+        if fund_form.is_valid():
+            club = get_object_or_404(Club, pk=club_id)
+            if request.user != club.leader:
+                return HttpResponse("Restricted Access")
+            fund = Fund(fund_name=fund_form.cleaned_data['fund_name'], description=fund_form.cleaned_data['description'], club=club)
+            fund.save()
+            return HttpResponseRedirect(reverse('edfund:clubInfo', args=[club.encoded_id()]))
+    else:
+        fund_form = FundForm()
+        club = get_object_or_404(Club, pk=decode_id(club_id))
+        return render(request, 'app/user/addfund.html', {'fund_form': fund_form, 'club': club})
+
+
+@login_required
+def delete_club(request, club_id):
+    club = get_object_or_404(Club, pk=decode_id(club_id))
+    if request.user != club.leader:
+            return HttpResponseRedirect(reverse('edfund:schoolInfo', args=[club.school.encoded_id()]))
+    if request.method == 'POST':
+        club.delete()
+        return HttpResponseRedirect(reverse('edfund:schoolInfo', args=[club.school.encoded_id()]))
+    else:
+        return render(request,'app/schools/delete_club_confirm.html', {'club': club})

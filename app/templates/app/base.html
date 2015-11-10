@@ -19,8 +19,8 @@
                     <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
                     <ul class="right hide-on-med-and-down">
                         <li><a href="{% url 'edfund:schools' %}">Schools</a></li>
-                        <li><a href="{% url 'edfund:allclubs' %}">Clubs</a></li>
-                        <li><a href="{% url 'edfund:allfunds' %}">Funds</a></li>
+                        <li><a href="{% url 'edfund:clubs' %}">Clubs</a></li>
+                        <li><a href="{% url 'edfund:funds' %}">Funds</a></li>
                         {% if user.is_authenticated %}
                             <li><a href="{% url 'edfund:userInfo' user.id %}">{{ user.first_name }} {{ user.last_name }}</a></li>
                             <li><a href="{% url 'edfund:logout' %}">Log Out</a></li>
@@ -28,14 +28,18 @@
                             <li><a href="{% url 'edfund:login' %}">Login</a></li>
                             <li><a href="{% url 'edfund:register' %}">Register</a></li>
                         {% endif %}
-
                     </ul>
                     <ul id="nav-mobile" class="side-nav">
                         <li><a href="{% url 'edfund:schools' %}">Schools</a></li>
-                        <li><a href="{% url 'edfund:allclubs' %}">Clubs</a></li>
-                        <li><a href="{% url 'edfund:allfunds' %}">Funds</a></li>
-                        <li><a href="{% url 'edfund:login' %}">Login</a></li>
-                        <li><a href="{% url 'edfund:register' %}">Register</a></li>
+                        <li><a href="{% url 'edfund:clubs' %}">Clubs</a></li>
+                        <li><a href="{% url 'edfund:funds' %}">Funds</a></li>
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'edfund:userInfo' user.id %}">Profile</a></li>
+                            <li><a href="{% url 'edfund:logout' %}">Log Out</a></li>
+                        {% else %}
+                            <li><a href="{% url 'edfund:login' %}">Login</a></li>
+                            <li><a href="{% url 'edfund:register' %}">Register</a></li>
+                        {% endif %}
                     </ul>
                 </div>
             </nav>

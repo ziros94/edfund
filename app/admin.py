@@ -1,11 +1,15 @@
 from django.contrib import admin
-from .models import User, School, Fund, Donation, Club, Incentive
+from .models import User, School, Fund, Donation, Club, Incentive, UserProfile
 # Register your models here.
 
 
 class ClubInline(admin.StackedInline):
     model = Club
     extra = 3
+
+
+class UserProfileInline(admin.StackedInline):
+    model = UserProfile
 
 
 class FundInline(admin.StackedInline):
@@ -19,7 +23,7 @@ class SchoolAdmin(admin.ModelAdmin):
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ('username', 'first_name', 'last_name')
-    inlines = [ClubInline]
+    inlines = [UserProfileInline, ClubInline]
 
 
 class ClubAdmin(admin.ModelAdmin):

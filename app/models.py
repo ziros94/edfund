@@ -4,7 +4,6 @@ from django.utils import timezone
 from tastypie.models import create_api_key
 import base64
 models.signals.post_save.connect(create_api_key, sender=User)
-# Create your models here.
 
 
 def decode_id(id):
@@ -26,6 +25,11 @@ class School(models.Model):
 
     class Meta:
         ordering = ['school_name']
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User)
+    school = models.ForeignKey(School)
 
 
 class Club(models.Model):

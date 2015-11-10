@@ -1,4 +1,4 @@
-from .models import User, Club
+from .models import User, Club, Fund
 from django import forms
 
 
@@ -21,3 +21,12 @@ class ClubForm(forms.ModelForm):
     class Meta:
         model = Club
         fields = ('club_name', 'description')
+
+
+class FundForm(forms.ModelForm):
+    fund_name = forms.CharField(widget=forms.TextInput(attrs={'id': 'fund_name'}))
+    description = forms.CharField(widget=forms.Textarea(attrs={'id': 'description', 'class': 'materialize-textarea'}))
+
+    class Meta:
+        model = Fund
+        fields = ('fund_name', 'description')
