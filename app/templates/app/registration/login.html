@@ -1,0 +1,25 @@
+{% extends 'app/base.html' %}
+{% block content %}
+    <div class="container center">
+        <h1>Login to EdFund</h1>
+        <form id="login_form" method="post" action="{% url 'edfund:login' %}">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col offset-s3 s6 offset-s3">
+                    <input type="text" id="username" name="username"/>
+                    <label for="username">Username</label>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col offset-s3 s6 offset-s3">
+                    <input type="password" id="password" name="password"/>
+                    <label for="password">Password</label>
+                </div>
+            </div>
+            <div class="row">
+                <button type="submit" name="submit" class="btn-large waves-effect waves-light orange">Log In</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

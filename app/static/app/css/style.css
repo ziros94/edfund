@@ -31,3 +31,6 @@ main {
     padding-bottom: 0;
     margin-bottom: 0;
 }
+.dropdown-content li > a, .dropdown-content li > span{
+    color: #0277bd !important;
+}

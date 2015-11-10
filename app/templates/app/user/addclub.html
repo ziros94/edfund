@@ -1,0 +1,35 @@
+{% extends 'app/base.html' %}
+{% block content %}
+    <div class="container center">
+        <h2>Registration Form</h2>
+        <form class="row col s12" action="{% url 'edfund:addClub' %}" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="input-field offset-s3 col s6 offset-s3">
+                    {{ club_form.club_name }}
+                    <label for="club_name">Club Name</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field offset-s3 col s6 offset-s3">
+                    {{ club_form.description }}
+                    <label for="description">Club Description</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field offset-s3 col s6 offset-s3">
+                    <select id="school_select" name="school_select">
+                        <option value="" disabled selected>Choose your option</option>
+                        {% for school in schools %}
+                            <option value="{{ school.id }}">{{ school.school_name }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="school_select">Select School</label>
+                </div>
+            </div>
+            <div class="row">
+                <button type="submit" name="submit" class="btn-large waves-effect waves-light orange">Add Club</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

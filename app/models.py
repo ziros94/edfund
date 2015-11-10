@@ -30,6 +30,7 @@ class School(models.Model):
 
 class Club(models.Model):
     club_name = models.CharField(max_length=200)
+    description = models.CharField(max_length=255, default='')
     leader = models.ForeignKey(User)
     school = models.ForeignKey(School)
 
@@ -38,6 +39,9 @@ class Club(models.Model):
 
     def encoded_id(self):
         return base64.b64encode(str(self.id))
+
+    def set_school(self, school):
+        self.school = school
 
     class Meta:
         ordering = ['club_name']

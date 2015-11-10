@@ -30,4 +30,5 @@ urlpatterns = [
     url(r'^edfund/', include('app.urls', namespace="edfund")),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include(v1_api.urls)),
+    url('^', include('django.contrib.auth.urls')),
 ]

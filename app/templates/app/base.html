@@ -15,13 +15,27 @@
         <header>
             <nav class="light-blue darken-3">
                 <div class="nav-wrapper container">
-                    <div class="brand-logo"><a href="{% url 'edfund:index' %}" >EdFund</a> <i class="fa fa-graduation-cap" style="display: inline"></i></div>
+                    <div class="brand-logo"><a href="{% url 'edfund:index' %}" >EdFund <i class="fa fa-graduation-cap" style="display: inline"></i></a></div>
                     <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
                     <ul class="right hide-on-med-and-down">
                         <li><a href="{% url 'edfund:schools' %}">Schools</a></li>
+                        <li><a href="{% url 'edfund:allclubs' %}">Clubs</a></li>
+                        <li><a href="{% url 'edfund:allfunds' %}">Funds</a></li>
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'edfund:userInfo' user.id %}">{{ user.first_name }} {{ user.last_name }}</a></li>
+                            <li><a href="{% url 'edfund:logout' %}">Log Out</a></li>
+                        {% else %}
+                            <li><a href="{% url 'edfund:login' %}">Login</a></li>
+                            <li><a href="{% url 'edfund:register' %}">Register</a></li>
+                        {% endif %}
+
                     </ul>
                     <ul id="nav-mobile" class="side-nav">
                         <li><a href="{% url 'edfund:schools' %}">Schools</a></li>
+                        <li><a href="{% url 'edfund:allclubs' %}">Clubs</a></li>
+                        <li><a href="{% url 'edfund:allfunds' %}">Funds</a></li>
+                        <li><a href="{% url 'edfund:login' %}">Login</a></li>
+                        <li><a href="{% url 'edfund:register' %}">Register</a></li>
                     </ul>
                 </div>
             </nav>
@@ -38,6 +52,7 @@
         <script>
             $(document).ready(function(){
                 $(".button-collapse").sideNav();
+                $('select').material_select();
             });
         </script>
     </body>
