@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
-from .models import User, School, Fund, Donation, Club, Incentive, decode_id
+from .models import User, School, Fund, Donation, Club, Incentive, UserProfile, decode_id
 from .forms import UserForm, ClubForm, FundForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
@@ -77,20 +77,24 @@ class UserClubInfoView(generic.DetailView):
 
 
 def register(request):
+    schools = School.objects.all()
     registered = False
     if request.method == 'POST':
         user_form = UserForm(data=request.POST)
         if user_form.is_valid():
+            school = get_object_or_404(School, pk=int(request.POST['school']))
             user = user_form.save()
             user.set_password(user.password)
+            userprof = UserProfile(user=user, school=school)
             user.save()
+            userprof.save()
             registered = True
             print "REGISTER SUCCESS"
         else:
             print user_form.errors
     else:
         user_form = UserForm()
-    return render(request, 'app/registration/register.html', {'user_form': user_form, 'registered': registered})
+    return render(request, 'app/registration/register.html', {'user_form': user_form, 'registered': registered, 'schools': schools})
 
 
 def user_login(request):

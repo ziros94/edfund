@@ -38,6 +38,17 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="input-field offset-s3 col s6 offset-s3">
+                        <select id="school" name="school">
+                            <option value="" disabled selected>Choose your school</option>
+                            {% for school in schools %}
+                                <option value="{{ school.id }}">{{ school.school_name }}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="school">Select Your School</label>
+                    </div>
+                </div>
+                <div class="row">
                     <button type="submit" name="submit" class="btn-large waves-effect waves-light orange">Register!</button>
                 </div>
 
